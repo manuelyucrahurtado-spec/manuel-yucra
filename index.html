@@ -3,6 +3,10 @@
 <title>Manuel Yucra, Motion Designer</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🎬%3C/text%3E%3C/svg%3E">
 <meta name="theme-color" content="#F1EFEA">
+<meta name="robots" content="noindex, nofollow"><!-- QUITAR esta línea cuando el contenido sea definitivo -->
+<link rel="canonical" href="https://manuelyucra.com/">
+<meta property="og:type" content="website"><meta property="og:url" content="https://manuelyucra.com/"><meta name="twitter:card" content="summary_large_image"><meta property="og:image" content="https://manuelyucra.com/og-image.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Manuel Yucra, motion designer, en su avatar ilustrado"><meta name="twitter:image" content="https://manuelyucra.com/og-image.jpg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Manuel Yucra","jobTitle":"Motion Designer","url":"https://manuelyucra.com","sameAs":["https://www.linkedin.com/in/manuel-yucra-hurtado/","https://www.instagram.com/manueloso95/","https://vimeo.com/user125874935"]}</script>
 <meta name="description" content="Manuel Yucra: motion design, diseño gráfico y dirección audiovisual. Elige un atuendo y mira mi trabajo.">
 <meta property="og:title" content="Manuel Yucra, Motion Designer"><meta property="og:description" content="Elige un atuendo y mira mi trabajo.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -40,14 +44,25 @@ h2.t{font-size:clamp(30px,4.2vw,52px);font-weight:800;letter-spacing:-.04em;marg
 .sw{display:inline-flex;gap:6px;padding:5px;border:2px solid var(--ink);border-radius:var(--rb)}
 .sw button{border:0;background:transparent;border-radius:var(--rb);padding:8px 16px;cursor:pointer;font-weight:600;font-size:14px}
 .sw button[aria-pressed=true]{background:var(--ink);color:var(--paper)}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-.project{border:0;background:none;padding:0;text-align:left;cursor:pointer}
-.preview{aspect-ratio:4/3;border-radius:var(--r);background:var(--pv) center/cover;border:2px solid var(--line);box-shadow:var(--sh);position:relative;overflow:hidden;display:grid;place-items:center}
+.grid{display:flex;gap:12px;align-items:flex-start}.col{flex:1;min-width:0;display:flex;flex-direction:column;gap:12px}
+.project{border:0;background:none;padding:0;text-align:left;cursor:pointer;display:block;width:100%;margin:0;position:relative;border-radius:var(--r);overflow:hidden}
+.preview{aspect-ratio:4/3;border-radius:var(--r);background:var(--pv) center/cover;border:0;box-shadow:none;position:relative;overflow:hidden;display:grid;place-items:center;transition:transform .35s cubic-bezier(.2,.8,.2,1),filter .35s}
 .preview video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.preview i{font-style:normal;font-size:14px;position:relative;background:var(--paper);color:var(--ink);border-radius:var(--rb);padding:6px 14px}
-.project h3{font-size:19px;margin:14px 0 4px;font-weight:600}
-.project p{margin:0;color:var(--muted);font-size:15px;line-height:1.45}
-.project:hover .preview{outline:3px solid var(--accent);outline-offset:3px}
+.preview .yt-preview{position:absolute;inset:0;width:100%;height:100%;border:0;pointer-events:none;transform:scale(1.34);background:#111}
+.preview.has-youtube::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 48%,rgba(0,0,0,.78));pointer-events:none;opacity:0;transition:opacity .28s}
+.project:hover .preview.has-youtube::after{opacity:1}
+.preview i{display:none}
+.preview img.th{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.preview .yt-preview{transition:opacity .3s}
+.preview.noimg{background:linear-gradient(135deg,#2b2b2b,#111)}
+.preview.noimg::before{content:"▶";position:absolute;inset:0;display:grid;place-items:center;color:#fff;opacity:.55;font-size:28px}
+@media(hover:none){.preview.has-youtube::after{opacity:1}.project h3{opacity:1;transform:none}}
+.project h3{position:absolute;z-index:4;left:18px;right:18px;bottom:16px;margin:0;color:#fff;font-size:19px;font-weight:600;line-height:1.15;opacity:0;transform:translateY(10px);transition:opacity .25s,transform .3s;pointer-events:none;text-shadow:0 2px 16px #0008}
+.project p{display:none}
+.project:hover h3,.project:focus-visible h3{opacity:1;transform:none}
+.project:hover .preview{transform:scale(.985)}
+.project:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+@media(max-width:560px){.grid,.col{gap:10px}.project h3{left:12px;right:12px;bottom:11px;font-size:15px}}
 .fun{border:2px dashed var(--accent);border-radius:var(--r);padding:34px;max-width:640px}
 .fun p{font-size:20px;font-weight:300;line-height:1.5;margin:0 0 20px}
 .contact{background:var(--pv);color:var(--ink);padding:80px 0 30px}
@@ -83,7 +98,7 @@ dialog p{color:var(--muted);font-size:17px;line-height:1.55;margin:0}
 .opts button::after{content:"";position:absolute;inset:0;background:radial-gradient(circle,#ffffffa6,transparent 58%);opacity:0;transform:scale(.25);pointer-events:none}
 .opts button.pulse::after{animation:pulse .48s ease-out}
 @keyframes pulse{0%{opacity:.8;transform:scale(.2)}100%{opacity:0;transform:scale(1.7)}}
-@media(max-width:860px){.grid{grid-template-columns:1fr 1fr}}
+
 @media(max-width:760px){body{overflow-x:hidden}.brand span{display:none}.hi{height:52px;padding:0 8px 0 10px}.site-nav a{padding:9px 10px;font-size:13px}
 .hero.wrap{display:flex;flex-direction:column;padding:0;gap:0;min-height:0}
 .stage{order:-1;height:61svh;min-height:430px;overflow:hidden;align-items:start;padding-top:74px}
@@ -95,7 +110,7 @@ dialog p{color:var(--muted);font-size:17px;line-height:1.55;margin:0}
 .controls{width:min(94%,560px);margin:13px auto 0}.hint{text-align:center;font-size:12px;margin-bottom:9px}
 .opts{grid-template-columns:repeat(5,1fr);gap:7px;max-width:none}.opts button{min-width:0;min-height:58px;padding:8px 5px;border-radius:15px;box-shadow:0 2px 0 #DDD9CF}
 .btn-emoji{font-size:23px}.opts button[aria-pressed=true] .btn-emoji{display:block;transform:scale(1.08)}.opts button[aria-pressed=true] .btn-title{display:none}}
-@media(max-width:560px){.wrap{padding:0 18px}.hero.wrap{padding:0}.grid{grid-template-columns:1fr}}
+@media(max-width:560px){.wrap{padding:0 18px}.hero.wrap{padding:0}}
 @media(max-width:420px){.stage{height:59svh;min-height:390px}.doll{width:94vw}#copy{margin-top:-23svh;padding-left:8px;padding-right:8px}.glass,.controls{width:96%}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}.glass::after,.opts button:hover .btn-emoji{animation:none!important}}
 
@@ -112,6 +127,25 @@ dialog p{color:var(--muted);font-size:17px;line-height:1.55;margin:0}
 @media(max-width:760px){.hang{margin-left:0!important}}
 @media(min-width:761px){.glass::after{display:none}}
 h2.t,.contact h2,.project h3,.brand b{font-family:'Bricolage Grotesque','Instrument Sans',Arial,sans-serif}
+
+/* CLIENTES */
+.clients{padding:34px 0 58px;overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.clients-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.13em;color:var(--muted);margin:0 0 24px;text-align:center}
+.logo-marquee{overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.logo-track{display:flex;width:max-content;gap:0;align-items:center;animation:logoRun 55s linear infinite;will-change:transform}
+.logo-group{display:flex;align-items:center;gap:64px;padding-right:64px;flex:none}
+.logo-marquee:has(.client-logo:hover) .logo-track{animation-play-state:paused}
+.client-logo{height:52px;min-width:150px;display:flex;align-items:center;justify-content:center;opacity:.62;transition:opacity .25s,transform .25s}
+.client-logo img{display:block;height:var(--h,34px);width:auto;max-width:none;filter:grayscale(1);transition:filter .25s,transform .25s}
+.client-logo:hover img{filter:grayscale(0);transform:scale(1.05)}
+.client-logo:hover{opacity:1;transform:scale(1.035)}
+
+/* Normalización óptica de logos: iguala peso visual sin deformar proporciones */
+
+@keyframes logoRun{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media(max-width:760px){.clients{padding:28px 0 42px}.logo-group{gap:42px;padding-right:42px}.client-logo{height:44px;min-width:120px}.client-logo img{height:calc(var(--h,34px)*.8)}}
+@media(prefers-reduced-motion:reduce){.logo-track{animation:none;transform:none;flex-wrap:wrap;width:auto;justify-content:center;padding:0 20px}}
+
 </style></head><body data-role="motion" data-icons="gray">
 <header class="site-header"><div class="hi"><a class="brand" href="#" aria-label="Inicio"><span class="mark">MY</span><span><b>Manuel Yucra</b><span>Motion Designer</span></span></a>
 <nav class="site-nav" aria-label="Principal"><a href="#" data-link="demoreel">Demoreel 2026</a><a class="nav-cta" href="#" data-link="cv">Descargar CV ↓</a></nav></div></header>
@@ -120,16 +154,23 @@ h2.t,.contact h2,.project h3,.brand b{font-family:'Bricolage Grotesque','Instrum
 <div class="controls"><p class="hint">Prueba otro atuendo ↓</p><div class="opts" id="opts" role="group" aria-label="Elige un atuendo"></div></div></div>
 <div class="stage" id="stage"><div class="bk"></div><div class="doll" id="doll"><div class="items" id="items" aria-hidden="true"></div></div><div class="floor" id="floor"></div></div>
 </main>
+
+<section class="clients" aria-label="Clientes"><div class="wrap"><p class="clients-label">He trabajado con</p></div><div class="logo-marquee"><div class="logo-track" id="logo-track"></div></div></section>
 <div class="panel">
 <section class="work wrap" id="trabajos"><div class="head"><h2 class="t" id="wt">Trabajos</h2><div class="sw" id="sw" role="group" aria-label="Filtro de trabajos"><button data-f="all">Todo</button><button data-f="grafico">Diseño</button><button data-f="motion">Motion</button><button data-f="director">Dirección</button></div></div><div class="grid" id="grid"></div></section>
 </div>
+
 <section class="contact" id="contacto"><div class="wrap"><h2>Cuéntame tu próximo proyecto.</h2><p>Respondo por correo o WhatsApp.</p>
 <div class="acts"><a class="btn fill" href="#" data-link="email">Escribir por correo</a><a class="btn" href="#" data-link="whatsapp">Abrir WhatsApp</a><button class="btn" id="copy-mail">Copiar correo</button></div>
 <footer><span>© <span id="year"></span> Manuel Yucra</span><span><a href="#" data-link="linkedin">LinkedIn</a>, <a href="#" data-link="vimeo">Vimeo</a>, <a href="#" data-link="instagram">Instagram</a></span></footer></div></section>
+<dialog id="reel-dlg" aria-labelledby="reel-title"><div class="mh"><h2 id="reel-title">Demoreel 2026</h2><button class="x reel-x" aria-label="Cerrar">×</button></div><div class="media" id="reel-media"></div></dialog>
 <dialog id="dlg" aria-labelledby="dt"><div class="mh"><h2 id="dt"></h2><button class="x" aria-label="Cerrar">×</button></div><div class="media" id="media"></div><p id="dd"></p></dialog>
 <div class="toast" role="status" aria-live="polite"></div>
 <script>
-const CONFIG={demoreel:'',email:'',whatsapp:'',linkedin:'',vimeo:'',instagram:'',cv:''};
+const CONFIG={demoreel:'https://player.vimeo.com/video/1167370724?h=063676cb57',email:'manuelyucrahurtado@gmail.com',whatsapp:'51937226864',linkedin:'https://www.linkedin.com/in/manuel-yucra-hurtado/',vimeo:'https://vimeo.com/user125874935',instagram:'https://www.instagram.com/manueloso95/',cv:'cv/Manuel-Yucra-CV-2026.pdf'};
+
+const CLIENTS=[{name:'Aceros Arequipa',src:'logos/aceros-arequipa.svg',h:26},{name:'Webtilia',src:'logos/webtilia.svg',h:26},{name:'Entel',src:'logos/entel.svg',h:28},{name:'TECNO',src:'logos/tecno.svg',h:26},{name:'Berlitz',src:'logos/berlitz.svg',h:30},{name:'Securitas',src:'logos/securitas.svg',h:41},{name:'EY',src:'logos/ey.svg',h:33}];
+
 const SRC={base:'avatar/base.webp',motion:'avatar/motion.webp',grafico:'avatar/disenador.webp',director:'avatar/cine.webp',batman:'avatar/batman.webp',jedi:'avatar/jedi.webp'};
 const ROLES={
 motion:{label:'Motion',q:'¿Motion Designer?',v:'Sí',a:'Doy movimiento a ideas, marcas e historias desde 2020.',cta:'Ver proyectos de Motion',f:'motion'},
@@ -152,15 +193,43 @@ function showItems(k,first){
   d.innerHTML=`<span class="in" style="animation-delay:${-i*.9}s">${it.img?`<img src="${esc(it.img)}" alt="">`:it.e}</span>`;box.append(d);
   if(!reduce)d.animate([{opacity:0,transform:'translateY(-30px) scale(.3)'},{opacity:1,transform:'translateY(6px) scale(1.08)',offset:.65},{opacity:1,transform:'none'}],{duration:520,delay:(first?500:380)+i*90,easing:'cubic-bezier(.2,1.2,.4,1)',fill:'backwards'})})}
 const PROJECTS=[
-{role:'motion',title:'Proyecto de motion 1',desc:'Qué se pidió, qué hice yo y cuál fue el resultado.',thumb:'',loop:'',embed:'',video:''},
-{role:'motion',title:'Proyecto de motion 2',desc:'Qué se pidió, qué hice yo y cuál fue el resultado.',thumb:'',loop:'',embed:'',video:''},
-{role:'motion',title:'Proyecto de motion 3',desc:'Qué se pidió, qué hice yo y cuál fue el resultado.',thumb:'',loop:'',embed:'',video:''},
-{role:'grafico',title:'Proyecto de diseño 1',desc:'Qué se pidió, qué hice yo y cuál fue el resultado.',thumb:'',loop:'',embed:'',video:''},
-{role:'grafico',title:'Proyecto de diseño 2',desc:'Qué se pidió, qué hice yo y cuál fue el resultado.',thumb:'',loop:'',embed:'',video:''},
-{role:'director',title:'Proyecto de dirección 1',desc:'Sinopsis, tu rol y dónde se vio.',thumb:'',loop:'',embed:'',video:''}];
+{role:'grafico',title:'Diseño — Proyecto 01',desc:'Prueba de navegación y visualización de proyectos.',thumb:'',loop:'',embed:'https://www.youtube.com/embed/WL-I5wWmVFw?controls=1&rel=0&autoplay=1',preview:'https://www.youtube.com/embed/WL-I5wWmVFw?enablejsapi=1&autoplay=0&mute=1&controls=0&loop=1&playlist=WL-I5wWmVFw&playsinline=1&rel=0&modestbranding=1',video:''},
+{role:'grafico',title:'Diseño — Proyecto 02',desc:'Prueba de navegación y visualización de proyectos.',thumb:'',loop:'',embed:'https://www.youtube.com/embed/YmyJT1k5XyQ?controls=1&rel=0&autoplay=1',preview:'https://www.youtube.com/embed/YmyJT1k5XyQ?enablejsapi=1&autoplay=0&mute=1&controls=0&loop=1&playlist=YmyJT1k5XyQ&playsinline=1&rel=0&modestbranding=1',video:''},
+{role:'grafico',title:'Diseño — Proyecto 03',desc:'Prueba de navegación y visualización de proyectos.',thumb:'',loop:'',embed:'https://www.youtube.com/embed/WL-I5wWmVFw?controls=1&rel=0&autoplay=1',preview:'https://www.youtube.com/embed/WL-I5wWmVFw?enablejsapi=1&autoplay=0&mute=1&controls=0&loop=1&playlist=WL-I5wWmVFw&playsinline=1&rel=0&modestbranding=1',video:''},
+{role:'grafico',title:'Diseño — Proyecto 04',desc:'Prueba de navegación y visualización de proyectos.',thumb:'',loop:'',embed:'https://www.youtube.com/embed/YmyJT1k5XyQ?controls=1&rel=0&autoplay=1',preview:'https://www.youtube.com/embed/YmyJT1k5XyQ?enablejsapi=1&autoplay=0&mute=1&controls=0&loop=1&playlist=YmyJT1k5XyQ&playsinline=1&rel=0&modestbranding=1',video:''},
+{role:'grafico',title:'Diseño — Proyecto 05',desc:'Prueba de navegación y visualización de proyectos.',thumb:'',loop:'',embed:'https://www.youtube.com/embed/WL-I5wWmVFw?controls=1&rel=0&autoplay=1',preview:'https://www.youtube.com/embed/WL-I5wWmVFw?enablejsapi=1&autoplay=0&mute=1&controls=0&loop=1&playlist=WL-I5wWmVFw&playsinline=1&rel=0&modestbranding=1',video:''},
+{role:'grafico',title:'Diseño — Proyecto 06',desc:'Prueba de navegación y visualización de proyectos.',thumb:'',loop:'',embed:'https://www.youtube.com/embed/YmyJT1k5XyQ?controls=1&rel=0&autoplay=1',preview:'https://www.youtube.com/embed/YmyJT1k5XyQ?enablejsapi=1&autoplay=0&mute=1&controls=0&loop=1&playlist=YmyJT1k5XyQ&playsinline=1&rel=0&modestbranding=1',video:''},
+{role:'grafico',title:'Diseño — Proyecto 07',desc:'Prueba de navegación y visualización de proyectos.',thumb:'',loop:'',embed:'https://www.youtube.com/embed/WL-I5wWmVFw?controls=1&rel=0&autoplay=1',preview:'https://www.youtube.com/embed/WL-I5wWmVFw?enablejsapi=1&autoplay=0&mute=1&controls=0&loop=1&playlist=WL-I5wWmVFw&playsinline=1&rel=0&modestbranding=1',video:''},
+{role:'grafico',title:'Diseño — Proyecto 08',desc:'Prueba de navegación y visualización de proyectos.',thumb:'',loop:'',embed:'https://www.youtube.com/embed/YmyJT1k5XyQ?controls=1&rel=0&autoplay=1',preview:'https://www.youtube.com/embed/YmyJT1k5XyQ?enablejsapi=1&autoplay=0&mute=1&controls=0&loop=1&playlist=YmyJT1k5XyQ&playsinline=1&rel=0&modestbranding=1',video:''},
+{role:'grafico',title:'Diseño — Proyecto 09',desc:'Prueba de navegación y visualización de proyectos.',thumb:'',loop:'',embed:'https://www.youtube.com/embed/WL-I5wWmVFw?controls=1&rel=0&autoplay=1',preview:'https://www.youtube.com/embed/WL-I5wWmVFw?enablejsapi=1&autoplay=0&mute=1&controls=0&loop=1&playlist=WL-I5wWmVFw&playsinline=1&rel=0&modestbranding=1',video:''},
+{role:'grafico',title:'Diseño — Proyecto 10',desc:'Prueba de navegación y visualización de proyectos.',thumb:'',loop:'',embed:'https://www.youtube.com/embed/YmyJT1k5XyQ?controls=1&rel=0&autoplay=1',preview:'https://www.youtube.com/embed/YmyJT1k5XyQ?enablejsapi=1&autoplay=0&mute=1&controls=0&loop=1&playlist=YmyJT1k5XyQ&playsinline=1&rel=0&modestbranding=1',video:''},
+{role:'grafico',title:'Diseño — Proyecto 11',desc:'Prueba de navegación y visualización de proyectos.',thumb:'',loop:'',embed:'https://www.youtube.com/embed/WL-I5wWmVFw?controls=1&rel=0&autoplay=1',preview:'https://www.youtube.com/embed/WL-I5wWmVFw?enablejsapi=1&autoplay=0&mute=1&controls=0&loop=1&playlist=WL-I5wWmVFw&playsinline=1&rel=0&modestbranding=1',video:''},
+{role:'grafico',title:'Diseño — Proyecto 12',desc:'Prueba de navegación y visualización de proyectos.',thumb:'',loop:'',embed:'https://www.youtube.com/embed/YmyJT1k5XyQ?controls=1&rel=0&autoplay=1',preview:'https://www.youtube.com/embed/YmyJT1k5XyQ?enablejsapi=1&autoplay=0&mute=1&controls=0&loop=1&playlist=YmyJT1k5XyQ&playsinline=1&rel=0&modestbranding=1',video:''},
+{role:'motion',title:'Motion — Proyecto 13',desc:'Prueba de navegación y visualización de proyectos.',thumb:'',loop:'',embed:'https://www.youtube.com/embed/WL-I5wWmVFw?controls=1&rel=0&autoplay=1',preview:'https://www.youtube.com/embed/WL-I5wWmVFw?enablejsapi=1&autoplay=0&mute=1&controls=0&loop=1&playlist=WL-I5wWmVFw&playsinline=1&rel=0&modestbranding=1',video:''},
+{role:'motion',title:'Motion — Proyecto 14',desc:'Prueba de navegación y visualización de proyectos.',thumb:'',loop:'',embed:'https://www.youtube.com/embed/YmyJT1k5XyQ?controls=1&rel=0&autoplay=1',preview:'https://www.youtube.com/embed/YmyJT1k5XyQ?enablejsapi=1&autoplay=0&mute=1&controls=0&loop=1&playlist=YmyJT1k5XyQ&playsinline=1&rel=0&modestbranding=1',video:''},
+{role:'motion',title:'Motion — Proyecto 15',desc:'Prueba de navegación y visualización de proyectos.',thumb:'',loop:'',embed:'https://www.youtube.com/embed/WL-I5wWmVFw?controls=1&rel=0&autoplay=1',preview:'https://www.youtube.com/embed/WL-I5wWmVFw?enablejsapi=1&autoplay=0&mute=1&controls=0&loop=1&playlist=WL-I5wWmVFw&playsinline=1&rel=0&modestbranding=1',video:''},
+{role:'motion',title:'Motion — Proyecto 16',desc:'Prueba de navegación y visualización de proyectos.',thumb:'',loop:'',embed:'https://www.youtube.com/embed/YmyJT1k5XyQ?controls=1&rel=0&autoplay=1',preview:'https://www.youtube.com/embed/YmyJT1k5XyQ?enablejsapi=1&autoplay=0&mute=1&controls=0&loop=1&playlist=YmyJT1k5XyQ&playsinline=1&rel=0&modestbranding=1',video:''},
+{role:'director',title:'Dirección — Proyecto 17',desc:'Prueba de navegación y visualización de proyectos.',thumb:'',loop:'',embed:'https://www.youtube.com/embed/WL-I5wWmVFw?controls=1&rel=0&autoplay=1',preview:'https://www.youtube.com/embed/WL-I5wWmVFw?enablejsapi=1&autoplay=0&mute=1&controls=0&loop=1&playlist=WL-I5wWmVFw&playsinline=1&rel=0&modestbranding=1',video:''},
+{role:'director',title:'Dirección — Proyecto 18',desc:'Prueba de navegación y visualización de proyectos.',thumb:'',loop:'',embed:'https://www.youtube.com/embed/YmyJT1k5XyQ?controls=1&rel=0&autoplay=1',preview:'https://www.youtube.com/embed/YmyJT1k5XyQ?enablejsapi=1&autoplay=0&mute=1&controls=0&loop=1&playlist=YmyJT1k5XyQ&playsinline=1&rel=0&modestbranding=1',video:''},
+{role:'director',title:'Dirección — Proyecto 19',desc:'Prueba de navegación y visualización de proyectos.',thumb:'',loop:'',embed:'https://www.youtube.com/embed/WL-I5wWmVFw?controls=1&rel=0&autoplay=1',preview:'https://www.youtube.com/embed/WL-I5wWmVFw?enablejsapi=1&autoplay=0&mute=1&controls=0&loop=1&playlist=WL-I5wWmVFw&playsinline=1&rel=0&modestbranding=1',video:''},
+{role:'director',title:'Dirección — Proyecto 20',desc:'Prueba de navegación y visualización de proyectos.',thumb:'',loop:'',embed:'https://www.youtube.com/embed/YmyJT1k5XyQ?controls=1&rel=0&autoplay=1',preview:'https://www.youtube.com/embed/YmyJT1k5XyQ?enablejsapi=1&autoplay=0&mute=1&controls=0&loop=1&playlist=YmyJT1k5XyQ&playsinline=1&rel=0&modestbranding=1',video:''}
+];
+PROJECTS.forEach(p=>{const m=(p.embed||'').match(/embed\/([\w-]{11})/);if(m){p.yt=m[1];p.thumb=p.thumb||`https://i.ytimg.com/vi/${p.yt}/maxresdefault.jpg`;p.embed=`https://www.youtube-nocookie.com/embed/${p.yt}?autoplay=1&rel=0`;p.preview=`https://www.youtube-nocookie.com/embed/${p.yt}?autoplay=1&mute=1&controls=0&loop=1&playlist=${p.yt}&playsinline=1&rel=0&modestbranding=1&disablekb=1`}p.ratio=p.ratio||'16/9'});
+const canHover=matchMedia('(hover:hover)').matches;
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+// Clientes: duplicamos la secuencia para crear un marquee continuo.
+const logoTrack=$('#logo-track');
+// Dos grupos idénticos. Cada grupo repite las 3 marcas varias veces para superar el ancho de pantalla;
+// al desplazarse exactamente un grupo, el segundo ocupa su lugar sin cortes visibles.
+function makeLogoGroup(dup){
+ const group=document.createElement('div');group.className='logo-group';if(dup)group.setAttribute('aria-hidden','true');
+ Array.from({length:4},()=>CLIENTS).forEach((list,n)=>list.forEach(c=>{const el=document.createElement('span');el.className='client-logo';el.title=c.name;el.style.setProperty('--h',c.h+'px');el.innerHTML=`<img src="${c.src}" alt="${dup||n?'':esc(c.name)}">`;group.append(el)}));
+ return group}
+logoTrack.append(makeLogoGroup(false),makeLogoGroup(true));
+
 const doll=$('#doll'),floor=$('#floor');
 let role=location.hash.slice(1),filter='motion',cur=null,tok=0;
 if(!ROLES[role])role='motion';
@@ -177,12 +246,28 @@ async function wear(k,first){
  floor.animate([{transform:'scaleX(.7)',opacity:.4},{transform:'scaleX(.7)',opacity:.4,offset:.5},{transform:'scaleX(1.08)',opacity:1,offset:.62},{transform:'none',opacity:1}],{duration:700});
  if(old)old.animate(OUT,{duration:300,easing:'ease-in',fill:'forwards'}).finished.then(()=>old.remove()).catch(()=>old.remove());
 }
+function colCount(){return innerWidth>860?4:2}
+let lastCols=0,rt;
 function renderWork(){
  const names={all:'Todos los trabajos',motion:'Trabajos de motion',grafico:'Trabajos de diseño',director:'Trabajos de dirección'};
  $('#wt').textContent=names[filter];$$('#sw button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.f===filter));
- $('#grid').innerHTML=PROJECTS.map((p,i)=>({p,i})).filter(o=>filter==='all'||o.p.role===filter).map(({p,i})=>`<button class="project" data-i="${i}"><div class="preview"${p.thumb?` style="background-image:url('${esc(p.thumb)}')"`:''}>${p.loop?`<video src="${esc(p.loop)}" muted loop playsinline preload="none"></video>`:''}<i>${p.embed||p.video?'Ver proyecto':'Próximamente'}</i></div><h3>${esc(p.title)}</h3><p>${esc(p.desc)}</p></button>`).join('');
- $$('.project').forEach(b=>{const v=b.querySelector('video');if(v){b.onmouseenter=()=>v.play();b.onmouseleave=()=>{v.pause();v.currentTime=0}}b.onclick=()=>openProject(PROJECTS[b.dataset.i])});
+ const n=colCount();lastCols=n;const grid=$('#grid');grid.replaceChildren();
+ const cols=Array.from({length:n},()=>{const c=document.createElement('div');c.className='col';grid.append(c);return c}),hs=Array(n).fill(0);
+ PROJECTS.filter(p=>filter==='all'||p.role===filter).forEach(p=>{
+  const [a,b]=String(p.ratio).split('/').map(Number);const k=hs.indexOf(Math.min(...hs));hs[k]+=(b||1)/(a||1);
+  const el=document.createElement('div');el.className='project';el.setAttribute('role','button');el.tabIndex=0;el.setAttribute('aria-label','Ver proyecto: '+p.title);
+  el.innerHTML=`<div class="preview${p.yt?' has-youtube':''}" style="aspect-ratio:${esc(p.ratio)}">${p.thumb?`<img class="th" src="${esc(p.thumb)}" alt="" loading="lazy" decoding="async">`:''}${p.loop?`<video src="${esc(p.loop)}" muted loop playsinline preload="none"></video>`:''}</div><h3>${esc(p.title)}</h3>`;
+  const img=el.querySelector('img.th');
+  if(img)img.onerror=()=>{if(img.dataset.f==='1'||!p.yt){img.remove();el.querySelector('.preview').classList.add('noimg');return}img.dataset.f='1';img.src=`https://i.ytimg.com/vi/${p.yt}/hqdefault.jpg`};
+  const v=el.querySelector('video');let t;
+  if(canHover){
+   el.onmouseenter=()=>{if(v)v.play();else if(p.preview)t=setTimeout(()=>{const f=document.createElement('iframe');f.className='yt-preview';f.style.opacity=0;f.onload=()=>{f.style.opacity=1};f.src=p.preview;f.title='Vista previa de '+p.title;f.allow='autoplay; encrypted-media';el.querySelector('.preview').append(f)},280)};
+   el.onmouseleave=()=>{clearTimeout(t);if(v){v.pause();v.currentTime=0}el.querySelectorAll('iframe.yt-preview').forEach(f=>f.remove())};
+  }
+  el.onclick=()=>openProject(p);el.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openProject(p)}};
+  cols[k].append(el)});
 }
+addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{if(colCount()!==lastCols)renderWork()},180)});
 function hang(){const h=$('.hang');if(!h)return;h.style.marginLeft='0';const w=h.getBoundingClientRect().width,fs=parseFloat(getComputedStyle(h).fontSize);h.style.marginLeft=-(w/fs)+'em'}
 document.fonts&&document.fonts.ready.then(hang);
 document.fonts&&document.fonts.load('800 40px "Bricolage Grotesque"').then(hang);
@@ -198,15 +283,19 @@ async function setRole(k,first){
 $$('#sw button').forEach(b=>b.onclick=()=>{filter=b.dataset.f;renderWork()});
 const dlg=$('#dlg');
 function openProject(p){$('#dt').textContent=p.title;$('#dd').textContent=p.desc;const m=$('#media');m.replaceChildren();
- if(p.embed){const f=document.createElement('iframe');f.src=p.embed;f.allow='autoplay; fullscreen; picture-in-picture';f.allowFullscreen=true;f.title=p.title;m.append(f)}
+ if(p.embed){const f=document.createElement('iframe');f.src=p.embed;f.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen';f.allowFullscreen=true;f.title=p.title;m.append(f)}
  else if(p.video){const v=document.createElement('video');v.src=p.video;v.controls=true;v.playsInline=true;m.append(v)}
  else m.textContent='Aquí irá el video de este proyecto.';dlg.showModal()}
 dlg.addEventListener('close',()=>$('#media').replaceChildren());$('.x').onclick=()=>dlg.close();
 dlg.addEventListener('click',e=>{const r=dlg.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dlg.close()});
+function openReel(){const m=$('#reel-media');m.replaceChildren();const u=CONFIG.demoreel,f=document.createElement('iframe');f.src=u+(u.includes('?')?'&':'?')+'autoplay=1';f.title='Demoreel 2026 de Manuel Yucra';f.allow='autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share';f.referrerPolicy='strict-origin-when-cross-origin';f.allowFullscreen=true;m.append(f);$('#reel-dlg').showModal()}
 const toast=$('.toast');let tm;const notify=m=>{toast.textContent=m;toast.classList.add('show');clearTimeout(tm);tm=setTimeout(()=>toast.classList.remove('show'),3500)};
 $$('[data-link]').forEach(a=>a.addEventListener('click',e=>{const k=a.dataset.link,c=CONFIG;
- const url={email:c.email&&'mailto:'+c.email,whatsapp:c.whatsapp&&'https://wa.me/'+c.whatsapp.replace(/\D/g,''),linkedin:c.linkedin,vimeo:c.vimeo,instagram:c.instagram,cv:c.cv,demoreel:c.demoreel}[k];
- if(!url){e.preventDefault();return notify('Este enlace aún no está configurado.')}a.href=url;if(k!=='email'){a.target='_blank';a.rel='noopener noreferrer'}}));
+ if(k==='demoreel'){e.preventDefault();return openReel()}
+ const url={email:c.email&&'mailto:'+c.email,whatsapp:c.whatsapp&&'https://wa.me/'+c.whatsapp.replace(/\D/g,'')+'?text='+encodeURIComponent('Hola Manuel, vi tu portafolio y me gustaría hablar de un proyecto.'),linkedin:c.linkedin,vimeo:c.vimeo,instagram:c.instagram,cv:c.cv}[k];
+ if(!url){e.preventDefault();return notify('Este enlace aún no está configurado.')}a.href=url;if(k==='cv'){a.download='Manuel-Yucra-CV-2026.pdf'}else if(k!=='email'){a.target='_blank';a.rel='noopener noreferrer'}}));
+const reelDlg=$('#reel-dlg');reelDlg.addEventListener('close',()=>$('#reel-media').replaceChildren());$('.reel-x').onclick=()=>reelDlg.close();
+reelDlg.addEventListener('click',e=>{const r=reelDlg.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)reelDlg.close()});
 $('#copy-mail').onclick=async()=>{if(!CONFIG.email)return notify('Agrega tu correo en CONFIG.');try{await navigator.clipboard.writeText(CONFIG.email);notify('Correo copiado.')}catch{notify(CONFIG.email)}};
 $('#year').textContent=new Date().getFullYear();
 Promise.all([base.decode().catch(()=>{}),load(role)]).then(()=>setRole(role,true));
