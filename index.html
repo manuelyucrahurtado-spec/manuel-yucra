@@ -146,12 +146,37 @@ h2.t,.contact h2,.project h3,.brand b{font-family:'Bricolage Grotesque','Instrum
 @media(max-width:760px){.clients{padding:28px 0 42px}.logo-group{gap:42px;padding-right:42px}.client-logo{height:44px;min-width:120px}.client-logo img{height:calc(var(--h,34px)*.8)}}
 @media(prefers-reduced-motion:reduce){.logo-track{animation:none;transform:none;flex-wrap:wrap;width:auto;justify-content:center;padding:0 20px}}
 
-</style></head><body data-role="motion" data-icons="gray">
+
+/* ---- Sección principal: frase completada por el selector ---- */
+.dots i{display:inline-block;width:.26em;height:.26em;border-radius:50%;background:currentColor;margin-left:.17em;animation:dot 1.2s infinite ease-in-out}
+.dots i:nth-child(2){animation-delay:.15s}.dots i:nth-child(3){animation-delay:.3s}
+@keyframes dot{0%,60%,100%{transform:translateY(0);opacity:.3}30%{transform:translateY(-.24em);opacity:1}}
+#cta{background:var(--accent);color:var(--ink);border-color:var(--ink);box-shadow:0 3px 0 var(--ink);font-size:14px;padding:9px 18px}
+#cta:hover{box-shadow:0 5px 0 var(--ink)}
+@media(min-width:761px){
+#copy{display:flex;flex-direction:column;align-items:flex-start}
+.glass{display:contents}
+.who{font-size:clamp(22px,2.2vw,30px);margin:0 0 14px}
+.controls{margin:0 0 26px}
+h1{font-size:clamp(38px,4.7vw,66px);margin:0 0 12px}
+.ans{font-size:clamp(17px,1.5vw,21px);max-width:none;margin:0 0 18px}
+.opts{display:flex;gap:8px;max-width:520px}
+.opts button{flex:0 0 60px;min-height:60px;padding:8px;transition:flex-basis .35s cubic-bezier(.2,1,.3,1),transform .28s,box-shadow .25s,background .25s}
+.opts button[aria-pressed=true]{flex:1 1 180px}}
+@media(max-width:760px){
+.who{margin:0 0 10px}
+.controls{width:auto;margin:0 0 14px}
+.opts{display:flex;gap:6px;max-width:none}
+.opts button{flex:0 0 clamp(44px,12.5vw,52px);min-width:0;min-height:50px;padding:6px;border-radius:14px}
+.opts button[aria-pressed=true]{flex:1 1 auto}
+.opts button[aria-pressed=true] .btn-emoji{display:none}
+.opts button[aria-pressed=true] .btn-title{display:block;font-size:13px}}
+@media(prefers-reduced-motion:reduce){.dots i{animation:none;opacity:.55}}
+</style></head><body data-role="motion" data-icons="gray" data-opt="d">
 <header class="site-header"><div class="hi"><a class="brand" href="#" aria-label="Inicio"><span class="mark">MY</span><span><b>Manuel Yucra</b><span>Motion Designer</span></span></a>
 <nav class="site-nav" aria-label="Principal"><a href="#" data-link="demoreel">Demoreel 2026</a><a class="nav-cta" href="#" data-link="cv">Descargar CV ↓</a></nav></div></header>
 <main class="hero wrap">
-<div id="copy"><div class="glass" id="glass"><p class="who">Manuel Yucra es</p><h1 id="q"></h1><p class="ans" id="ans"></p><a class="btn fill" href="#trabajos" id="cta"></a></div>
-<div class="controls"><p class="hint">Prueba otro atuendo ↓</p><div class="opts" id="opts" role="group" aria-label="Elige un atuendo"></div></div></div>
+<div id="copy"><div class="glass" id="glass"><p class="who">Manuel Yucra es <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span></p><div class="controls"><div class="opts" id="opts" role="group" aria-label="Elige un atuendo"></div></div><h1 id="q"></h1><p class="ans" id="ans"></p><a class="btn fill" href="#trabajos" id="cta"></a></div></div>
 <div class="stage" id="stage"><div class="bk"></div><div class="doll" id="doll"><div class="items" id="items" aria-hidden="true"></div></div><div class="floor" id="floor"></div></div>
 </main>
 
@@ -236,7 +261,7 @@ if(!ROLES[role])role='motion';
 const cache={};const load=k=>cache[k]||(cache[k]=(()=>{const i=new Image();i.src=SRC[k];i.alt='';return i.decode().catch(()=>{}).then(()=>i)})());
 Object.keys(ROLES).forEach(load);
 const base=new Image();base.src=SRC.base;base.alt='Avatar ilustrado de Manuel Yucra';doll.append(base);
-['grafico','motion','director','batman','jedi'].forEach(k=>{const b=document.createElement('button');b.dataset.k=k;b.setAttribute('aria-pressed','false');b.setAttribute('aria-label',LABELS[k][1]);b.innerHTML=`<span class="btn-emoji">${LABELS[k][0]}</span><span class="btn-title">${LABELS[k][1]}</span>`;b.onclick=()=>setRole(k);$('#opts').append(b)});
+['grafico','motion','director','batman','jedi'].forEach(k=>{const b=document.createElement('button');b.dataset.k=k;b.setAttribute('aria-pressed','false');b.setAttribute('aria-label',LABELS[k][1]);b.innerHTML=`<span class="btn-emoji">${LABELS[k][0]}</span><span class="btn-title">${ROLES[k].label}</span>`;b.onclick=()=>setRole(k);$('#opts').append(b)});
 const IN=reduce?[{opacity:0},{opacity:1}]:[{transform:'translateY(-90px) rotate(-3deg)',opacity:0},{transform:'translateY(8px) rotate(.6deg)',opacity:1,offset:.62},{transform:'none',opacity:1}];
 const OUT=reduce?[{opacity:1},{opacity:0}]:[{transform:'none',opacity:1},{transform:'translateY(50px)',opacity:0}];
 async function wear(k,first){
@@ -274,7 +299,7 @@ document.fonts&&document.fonts.load('800 40px "Bricolage Grotesque"').then(hang)
 async function setRole(k,first){
  if(!first&&k===role)return;role=k;const r=ROLES[k];document.body.dataset.role=k;history.replaceState(null,'','#'+k);
  if(!first){const g=$('#glass'),ab=$('#opts button[data-k="'+k+'"]');g.classList.remove('flash');void g.offsetWidth;g.classList.add('flash');ab.classList.remove('pulse');void ab.offsetWidth;ab.classList.add('pulse')}
- $('#q').innerHTML='<span class="hang">¿</span>'+esc(r.q.slice(1));hang();$('#ans').innerHTML=`<span class="v">${r.v==='Sí'?'✅':'❌'} ${r.v}</span>${esc(r.a)}`;$('#cta').textContent=r.cta+' →';
+ paint(k);
  $$('#opts button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.k===k));
  filter=r.f;renderWork();showItems(k,first);
  if(!first&&!reduce)['#q','#ans','#cta'].forEach((s,i)=>$(s).animate([{opacity:0,transform:'translateY(12px)'},{opacity:1,transform:'none'}],{duration:420,delay:i*70,easing:'cubic-bezier(.16,1,.3,1)',fill:'backwards'}));
@@ -298,5 +323,8 @@ const reelDlg=$('#reel-dlg');reelDlg.addEventListener('close',()=>$('#reel-media
 reelDlg.addEventListener('click',e=>{const r=reelDlg.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)reelDlg.close()});
 $('#copy-mail').onclick=async()=>{if(!CONFIG.email)return notify('Agrega tu correo en CONFIG.');try{await navigator.clipboard.writeText(CONFIG.email);notify('Correo copiado.')}catch{notify(CONFIG.email)}};
 $('#year').textContent=new Date().getFullYear();
+const SHORT={motion:'Desde 2020 dando movimiento a marcas.',grafico:'Casi 8 años de experiencia.',director:'He dirigido animación 2D.',batman:'Nunca nos han visto juntos.',jedi:'Su solicitud al Consejo sigue pendiente.'};
+const CTA2={motion:'Ver proyectos →',grafico:'Ver proyectos →',director:'Ver proyectos →',batman:'Investigar el caso →',jedi:'Que la Fuerza te guíe →'};
+function paint(k){const r=ROLES[k];$('#q').innerHTML='<span class="hang">¿</span>'+esc(r.q.slice(1));$('#ans').innerHTML=`<span class="v">${r.v==='Sí'?'✅':'❌'} ${r.v}</span>${esc(SHORT[k])}`;$('#cta').textContent=CTA2[k];hang()}
 Promise.all([base.decode().catch(()=>{}),load(role)]).then(()=>setRole(role,true));
 </script></body></html>
