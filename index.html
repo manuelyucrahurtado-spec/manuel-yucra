@@ -172,6 +172,69 @@ h1{font-size:clamp(38px,4.7vw,66px);margin:0 0 12px}
 .opts button[aria-pressed=true] .btn-emoji{display:none}
 .opts button[aria-pressed=true] .btn-title{display:block;font-size:13px}}
 @media(prefers-reduced-motion:reduce){.dots i{animation:none;opacity:.55}}
+
+/* VISOR CINEMATOGRÁFICO: video completo sin tarjeta ni recorte */
+#dlg,#reel-dlg{
+  position:fixed;inset:0;margin:auto;padding:0;border:0;border-radius:0;
+  width:100vw;max-width:none;height:100dvh;max-height:none;
+  background:transparent;color:#fff;overflow:visible;
+}
+#dlg::backdrop,#reel-dlg::backdrop{
+  background:rgba(0,0,0,.83);backdrop-filter:blur(13px);
+  -webkit-backdrop-filter:blur(13px);
+}
+#dlg[open],#reel-dlg[open]{display:flex;align-items:center;justify-content:center}
+#dlg .mh,#reel-dlg .mh{position:static;margin:0;pointer-events:none}
+#dlg .mh .x,#reel-dlg .mh .x{pointer-events:auto}
+#dlg .mh h2,#reel-dlg .mh h2{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+#dlg #dd{display:none}
+#dlg .media,#reel-dlg .media{
+  --video-ratio:16 / 9;
+  width:min(calc(100vw - 110px),calc((100dvh - 64px) * var(--video-ratio)));
+  height:auto;aspect-ratio:var(--video-ratio);
+  max-height:calc(100dvh - 64px);
+  padding:0;margin:0;border:0;border-radius:10px;
+  overflow:hidden;background:#000;display:block;
+  box-shadow:0 18px 65px rgba(0,0,0,.38);
+}
+#dlg .media iframe,#reel-dlg .media iframe,#dlg .media video,#reel-dlg .media video{
+  display:block;width:100%;height:100%;border:0;object-fit:contain;
+}
+#dlg .x,#reel-dlg .x{
+  position:fixed;top:max(18px,env(safe-area-inset-top));right:max(22px,env(safe-area-inset-right));
+  z-index:9999;display:grid;place-items:center;width:64px;height:64px;touch-action:manipulation;
+  padding:0;border:1px solid rgba(255,255,255,.28);border-radius:50%;
+  background:rgba(30,30,30,.55);color:#fff;cursor:pointer;
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  transition:background .2s,transform .2s,border-color .2s;
+}
+#dlg .x:hover,#reel-dlg .x:hover{background:rgba(255,255,255,.22);border-color:#fff;transform:rotate(90deg)}
+#dlg .x:focus-visible,#reel-dlg .x:focus-visible{outline:2px solid #fff;outline-offset:4px}
+#dlg .x svg,#reel-dlg .x svg{width:20px;height:20px;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round}
+@media(max-width:700px){
+ #dlg .media,#reel-dlg .media{
+   width:min(calc(100vw - 28px),calc((100dvh - 100px) * var(--video-ratio)));
+   max-height:calc(100dvh - 100px);border-radius:8px;
+ }
+ #dlg .x,#reel-dlg .x{top:max(12px,env(safe-area-inset-top));right:max(12px,env(safe-area-inset-right));width:60px;height:60px}
+}
+
+/* Página de proyecto tipo Behance: lienzo largo desplazable, sin tarjetas */
+#dlg.editorial-dialog[open]{display:flex;align-items:stretch;justify-content:center}
+#dlg.editorial-dialog .media.editorial-mode{width:min(100vw,1100px);height:100dvh;max-height:100dvh;aspect-ratio:auto;overflow-y:auto;overflow-x:hidden;border-radius:0;background:#050309;box-shadow:0 20px 80px #0009;scrollbar-width:thin;scrollbar-color:#777 #111;overscroll-behavior:contain;display:block}
+#dlg.editorial-dialog .editorial-art{display:block;width:100%;height:auto;max-width:none;max-height:none;object-fit:initial;border:0;border-radius:0}
+#dlg.editorial-dialog .x{right:max(16px,calc((100vw - 1100px)/2 + 18px));background:#111b;border-color:#fff7}
+@media(max-width:700px){#dlg.editorial-dialog .media.editorial-mode{width:100vw;height:100dvh;max-height:100dvh}#dlg.editorial-dialog .x{right:12px;width:52px;height:52px}}
+/* Las cuatro secciones de Cloudinary se presentan como un lienzo continuo */
+#dlg.editorial-dialog .editorial-mode{font-size:0;line-height:0}
+/* Galería editorial: imágenes completas, sin recortes */
+#dlg .media.gallery-mode{width:min(92vw,1050px);height:calc(100dvh - 110px);max-height:calc(100dvh - 110px);aspect-ratio:auto;background:transparent;box-shadow:none;overflow:visible;display:flex;align-items:center;justify-content:center;position:relative}
+#dlg .gallery-image{display:block;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;border-radius:8px;box-shadow:0 16px 50px #0007}
+#dlg .gallery-arrow{position:absolute;top:50%;transform:translateY(-50%);border:1px solid #ffffff55;border-radius:50%;background:#171717bb;color:white;width:52px;height:52px;cursor:pointer;font-size:35px;line-height:1;display:grid;place-items:center;z-index:3;backdrop-filter:blur(8px)}
+#dlg .gallery-arrow:hover{background:#333}
+#dlg .gallery-prev{left:8px}#dlg .gallery-next{right:8px}
+#dlg .gallery-counter{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);padding:7px 14px;border-radius:24px;background:#141414c9;color:#fff;font-size:13px;letter-spacing:.04em}
+@media(max-width:700px){#dlg .media.gallery-mode{width:calc(100vw - 18px);height:calc(100dvh - 110px);max-height:calc(100dvh - 110px)}#dlg .gallery-arrow{width:40px;height:40px;font-size:29px}#dlg .gallery-prev{left:0}#dlg .gallery-next{right:0}}
 </style></head><body data-role="motion" data-icons="gray" data-opt="d">
 <header class="site-header"><div class="hi"><a class="brand" href="#" aria-label="Inicio"><span class="mark">MY</span><span><b>Manuel Yucra</b><span>Motion Designer</span></span></a>
 <nav class="site-nav" aria-label="Principal"><a href="#" data-link="demoreel">Demoreel 2026</a><a class="nav-cta" href="#" data-link="cv">Descargar CV ↓</a></nav></div></header>
@@ -188,13 +251,13 @@ h1{font-size:clamp(38px,4.7vw,66px);margin:0 0 12px}
 <section class="contact" id="contacto"><div class="wrap"><h2>Cuéntame tu próximo proyecto.</h2><p>Respondo por correo o WhatsApp.</p>
 <div class="acts"><a class="btn fill" href="#" data-link="email">Escribir por correo</a><a class="btn" href="#" data-link="whatsapp">Abrir WhatsApp</a><button class="btn" id="copy-mail">Copiar correo</button></div>
 <footer><span>© <span id="year"></span> Manuel Yucra</span><span><a href="#" data-link="linkedin">LinkedIn</a>, <a href="#" data-link="vimeo">Vimeo</a>, <a href="#" data-link="instagram">Instagram</a></span></footer></div></section>
-<dialog id="reel-dlg" aria-labelledby="reel-title"><div class="mh"><h2 id="reel-title">Demoreel 2026</h2><button class="x reel-x" aria-label="Cerrar">×</button></div><div class="media" id="reel-media"></div></dialog>
-<dialog id="dlg" aria-labelledby="dt"><div class="mh"><h2 id="dt"></h2><button class="x" aria-label="Cerrar">×</button></div><div class="media" id="media"></div><p id="dd"></p></dialog>
+<dialog id="reel-dlg" aria-labelledby="reel-title"><div class="mh"><h2 id="reel-title">Demoreel 2026</h2><button class="x reel-x" aria-label="Cerrar video"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5L19 19M19 5L5 19"/></svg></button></div><div class="media" id="reel-media"></div></dialog>
+<dialog id="dlg" aria-labelledby="dt"><div class="mh"><h2 id="dt"></h2><button class="x" aria-label="Cerrar video"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5L19 19M19 5L5 19"/></svg></button></div><div class="media" id="media"></div><p id="dd"></p></dialog>
 <div class="toast" role="status" aria-live="polite"></div>
 <script>
 const CONFIG={demoreel:'https://player.vimeo.com/video/1167370724?h=063676cb57',email:'manuelyucrahurtado@gmail.com',whatsapp:'51937226864',linkedin:'https://www.linkedin.com/in/manuel-yucra-hurtado/',vimeo:'https://vimeo.com/user125874935',instagram:'https://www.instagram.com/manueloso95/',cv:'cv/Manuel-Yucra-CV-2026.pdf'};
 
-const CLIENTS=[{name:'Aceros Arequipa',src:'logos/aceros-arequipa.svg',h:26},{name:'Webtilia',src:'logos/webtilia.svg',h:26},{name:'Entel',src:'logos/entel.svg',h:28},{name:'TECNO',src:'logos/tecno.svg',h:26},{name:'Berlitz',src:'logos/berlitz.svg',h:30},{name:'Securitas',src:'logos/securitas.svg',h:41},{name:'EY',src:'logos/ey.svg',h:33}];
+const CLIENTS=[{name:'Aceros Arequipa',src:'logos/aceros-arequipa.svg',h:26},{name:'Webtilia',src:'logos/webtilia.svg',h:26},{name:'Entel',src:'logos/entel.svg',h:28},{name:'TECNO',src:'logos/tecno.svg',h:26},{name:'Berlitz',src:'logos/berlitz.svg',h:30},{name:'Securitas',src:'logos/securitas.svg',h:41},{name:'EY',src:'logos/ey.svg',h:33},{name:'Imaco',src:'logos/imaco.svg',h:32},{name:'Ibérica',src:'logos/iberica.svg',h:34}];
 
 const SRC={base:'avatar/base.webp',motion:'avatar/motion.webp',grafico:'avatar/disenador.webp',director:'avatar/cine.webp',batman:'avatar/batman.webp',jedi:'avatar/jedi.webp'};
 const ROLES={
@@ -218,22 +281,18 @@ function showItems(k,first){
   d.innerHTML=`<span class="in" style="animation-delay:${-i*.9}s">${it.img?`<img src="${esc(it.img)}" alt="">`:it.e}</span>`;box.append(d);
   if(!reduce)d.animate([{opacity:0,transform:'translateY(-30px) scale(.3)'},{opacity:1,transform:'translateY(6px) scale(1.08)',offset:.65},{opacity:1,transform:'none'}],{duration:520,delay:(first?500:380)+i*90,easing:'cubic-bezier(.2,1.2,.4,1)',fill:'backwards'})})}
 const PROJECTS=[
-{role:'grafico',title:'Diseño — Proyecto 01',desc:'Prueba de navegación y visualización de proyectos.',thumb:'',loop:'',embed:'https://www.youtube.com/embed/WL-I5wWmVFw?controls=1&rel=0&autoplay=1',preview:'https://www.youtube.com/embed/WL-I5wWmVFw?enablejsapi=1&autoplay=0&mute=1&controls=0&loop=1&playlist=WL-I5wWmVFw&playsinline=1&rel=0&modestbranding=1',video:''},
-{role:'grafico',title:'Diseño — Proyecto 02',desc:'Prueba de navegación y visualización de proyectos.',thumb:'',loop:'',embed:'https://www.youtube.com/embed/YmyJT1k5XyQ?controls=1&rel=0&autoplay=1',preview:'https://www.youtube.com/embed/YmyJT1k5XyQ?enablejsapi=1&autoplay=0&mute=1&controls=0&loop=1&playlist=YmyJT1k5XyQ&playsinline=1&rel=0&modestbranding=1',video:''},
-{role:'grafico',title:'Diseño — Proyecto 03',desc:'Prueba de navegación y visualización de proyectos.',thumb:'',loop:'',embed:'https://www.youtube.com/embed/WL-I5wWmVFw?controls=1&rel=0&autoplay=1',preview:'https://www.youtube.com/embed/WL-I5wWmVFw?enablejsapi=1&autoplay=0&mute=1&controls=0&loop=1&playlist=WL-I5wWmVFw&playsinline=1&rel=0&modestbranding=1',video:''},
-{role:'grafico',title:'Diseño — Proyecto 04',desc:'Prueba de navegación y visualización de proyectos.',thumb:'',loop:'',embed:'https://www.youtube.com/embed/YmyJT1k5XyQ?controls=1&rel=0&autoplay=1',preview:'https://www.youtube.com/embed/YmyJT1k5XyQ?enablejsapi=1&autoplay=0&mute=1&controls=0&loop=1&playlist=YmyJT1k5XyQ&playsinline=1&rel=0&modestbranding=1',video:''},
-{role:'grafico',title:'Diseño — Proyecto 05',desc:'Prueba de navegación y visualización de proyectos.',thumb:'',loop:'',embed:'https://www.youtube.com/embed/WL-I5wWmVFw?controls=1&rel=0&autoplay=1',preview:'https://www.youtube.com/embed/WL-I5wWmVFw?enablejsapi=1&autoplay=0&mute=1&controls=0&loop=1&playlist=WL-I5wWmVFw&playsinline=1&rel=0&modestbranding=1',video:''},
-{role:'grafico',title:'Diseño — Proyecto 06',desc:'Prueba de navegación y visualización de proyectos.',thumb:'',loop:'',embed:'https://www.youtube.com/embed/YmyJT1k5XyQ?controls=1&rel=0&autoplay=1',preview:'https://www.youtube.com/embed/YmyJT1k5XyQ?enablejsapi=1&autoplay=0&mute=1&controls=0&loop=1&playlist=YmyJT1k5XyQ&playsinline=1&rel=0&modestbranding=1',video:''},
-{role:'grafico',title:'Diseño — Proyecto 07',desc:'Prueba de navegación y visualización de proyectos.',thumb:'',loop:'',embed:'https://www.youtube.com/embed/WL-I5wWmVFw?controls=1&rel=0&autoplay=1',preview:'https://www.youtube.com/embed/WL-I5wWmVFw?enablejsapi=1&autoplay=0&mute=1&controls=0&loop=1&playlist=WL-I5wWmVFw&playsinline=1&rel=0&modestbranding=1',video:''},
-{role:'grafico',title:'Diseño — Proyecto 08',desc:'Prueba de navegación y visualización de proyectos.',thumb:'',loop:'',embed:'https://www.youtube.com/embed/YmyJT1k5XyQ?controls=1&rel=0&autoplay=1',preview:'https://www.youtube.com/embed/YmyJT1k5XyQ?enablejsapi=1&autoplay=0&mute=1&controls=0&loop=1&playlist=YmyJT1k5XyQ&playsinline=1&rel=0&modestbranding=1',video:''},
-{role:'grafico',title:'Diseño — Proyecto 09',desc:'Prueba de navegación y visualización de proyectos.',thumb:'',loop:'',embed:'https://www.youtube.com/embed/WL-I5wWmVFw?controls=1&rel=0&autoplay=1',preview:'https://www.youtube.com/embed/WL-I5wWmVFw?enablejsapi=1&autoplay=0&mute=1&controls=0&loop=1&playlist=WL-I5wWmVFw&playsinline=1&rel=0&modestbranding=1',video:''},
-{role:'grafico',title:'Diseño — Proyecto 10',desc:'Prueba de navegación y visualización de proyectos.',thumb:'',loop:'',embed:'https://www.youtube.com/embed/YmyJT1k5XyQ?controls=1&rel=0&autoplay=1',preview:'https://www.youtube.com/embed/YmyJT1k5XyQ?enablejsapi=1&autoplay=0&mute=1&controls=0&loop=1&playlist=YmyJT1k5XyQ&playsinline=1&rel=0&modestbranding=1',video:''},
-{role:'grafico',title:'Diseño — Proyecto 11',desc:'Prueba de navegación y visualización de proyectos.',thumb:'',loop:'',embed:'https://www.youtube.com/embed/WL-I5wWmVFw?controls=1&rel=0&autoplay=1',preview:'https://www.youtube.com/embed/WL-I5wWmVFw?enablejsapi=1&autoplay=0&mute=1&controls=0&loop=1&playlist=WL-I5wWmVFw&playsinline=1&rel=0&modestbranding=1',video:''},
-{role:'grafico',title:'Diseño — Proyecto 12',desc:'Prueba de navegación y visualización de proyectos.',thumb:'',loop:'',embed:'https://www.youtube.com/embed/YmyJT1k5XyQ?controls=1&rel=0&autoplay=1',preview:'https://www.youtube.com/embed/YmyJT1k5XyQ?enablejsapi=1&autoplay=0&mute=1&controls=0&loop=1&playlist=YmyJT1k5XyQ&playsinline=1&rel=0&modestbranding=1',video:''},
-{role:'motion',title:'Motion — Proyecto 13',desc:'Prueba de navegación y visualización de proyectos.',thumb:'',loop:'',embed:'https://www.youtube.com/embed/WL-I5wWmVFw?controls=1&rel=0&autoplay=1',preview:'https://www.youtube.com/embed/WL-I5wWmVFw?enablejsapi=1&autoplay=0&mute=1&controls=0&loop=1&playlist=WL-I5wWmVFw&playsinline=1&rel=0&modestbranding=1',video:''},
-{role:'motion',title:'Motion — Proyecto 14',desc:'Prueba de navegación y visualización de proyectos.',thumb:'',loop:'',embed:'https://www.youtube.com/embed/YmyJT1k5XyQ?controls=1&rel=0&autoplay=1',preview:'https://www.youtube.com/embed/YmyJT1k5XyQ?enablejsapi=1&autoplay=0&mute=1&controls=0&loop=1&playlist=YmyJT1k5XyQ&playsinline=1&rel=0&modestbranding=1',video:''},
-{role:'motion',title:'Motion — Proyecto 15',desc:'Prueba de navegación y visualización de proyectos.',thumb:'',loop:'',embed:'https://www.youtube.com/embed/WL-I5wWmVFw?controls=1&rel=0&autoplay=1',preview:'https://www.youtube.com/embed/WL-I5wWmVFw?enablejsapi=1&autoplay=0&mute=1&controls=0&loop=1&playlist=WL-I5wWmVFw&playsinline=1&rel=0&modestbranding=1',video:''},
-{role:'motion',title:'Motion — Proyecto 16',desc:'Prueba de navegación y visualización de proyectos.',thumb:'',loop:'',embed:'https://www.youtube.com/embed/YmyJT1k5XyQ?controls=1&rel=0&autoplay=1',preview:'https://www.youtube.com/embed/YmyJT1k5XyQ?enablejsapi=1&autoplay=0&mute=1&controls=0&loop=1&playlist=YmyJT1k5XyQ&playsinline=1&rel=0&modestbranding=1',video:''},
+{role:'motion',title:'Michael Jackson — In the Closet · Prueba 1',desc:'Prueba de galería con el nuevo video vertical. Video completo en Vimeo.',ratio:'9/16',thumb:'',loop:'videos/michael_maxima.mp4',embed:'https://player.vimeo.com/video/1236244902?h=fec001a6aa&autoplay=1',video:''},
+{role:'motion',title:'Reel vertical — Prueba 2',desc:'Vista previa optimizada. Video completo en Vimeo.',ratio:'9/16',thumb:'',loop:'videos/prueba_2_maxima.mp4',embed:'https://player.vimeo.com/video/1237667140?h=ebe6576076&autoplay=1',video:''},
+{role:'motion',title:'Reel vertical — Prueba 3',desc:'Vista previa optimizada. Video completo en Vimeo.',ratio:'9/16',thumb:'',loop:'videos/prueba_3_maxima.mp4',embed:'https://player.vimeo.com/video/1237673574?h=14f71e74eb&autoplay=1',video:''},
+{role:'motion',title:'Reel vertical — Prueba 4',desc:'Vista previa optimizada. Video completo en Vimeo.',ratio:'9/16',thumb:'',loop:'videos/prueba_4_maxima.mp4',embed:'https://player.vimeo.com/video/1237677127?h=428ee707cf&autoplay=1',video:''},
+{role:'motion',title:'Reel vertical — Prueba 6',desc:'Vista previa optimizada. Video completo en Vimeo.',ratio:'9/16',thumb:'',loop:'videos/prueba_6_maxima.mp4',embed:'https://player.vimeo.com/video/1237726015?h=402b95a641&autoplay=1',video:''},
+{role:'motion',title:'Reel vertical — Prueba 7',desc:'Vista previa optimizada. Video completo en Vimeo.',ratio:'9/16',thumb:'',loop:'videos/prueba_7_maxima.mp4',embed:'https://player.vimeo.com/video/1237734213?h=d71a660b58&autoplay=1',video:''},
+{role:'motion',title:'Reel vertical — Prueba 8',desc:'Vista previa optimizada. Video completo en Vimeo.',ratio:'9/16',thumb:'',loop:'videos/prueba_8_maxima.mp4',embed:'https://player.vimeo.com/video/1237737677?h=5b9eb113ec&autoplay=1',video:''},
+
+{role:'motion',title:'Reel vertical — Prueba 9',desc:'Vista previa optimizada. Video completo en Vimeo.',ratio:'9/16',thumb:'',loop:'videos/prueba_9_maxima.mp4',embed:'https://player.vimeo.com/video/1237758943?h=a7e93251a4&autoplay=1',video:''},
+
+{role:'grafico',title:'Haz visible lo oculto — Campaña',desc:'Campaña contra el abuso sexual infantil · Presentación editorial',ratio:'4/5',thumb:'diseno/haz-visible/portada.webp',editorial:['https://res.cloudinary.com/xrionlxu/image/upload/f_auto,q_auto/v1793373421/01_haz_visible_lo_oculto.png','https://res.cloudinary.com/xrionlxu/image/upload/f_auto,q_auto/v1793373444/02_piezas_graficas.png','https://res.cloudinary.com/xrionlxu/image/upload/f_auto,q_auto/v1793373455/03_billboard_nino.png','https://res.cloudinary.com/xrionlxu/image/upload/f_auto,q_auto/v1793373470/04_gracias_por_ver.png']},
+...Array.from({length:5},(_,i)=>({role:'grafico',title:`TECNO — POVA Curve 2 · Pieza ${i+1}`,desc:'Campaña gráfica · 5 piezas',ratio:i===1?'9/16':'1/1',thumb:`diseno/tecno-pova/0${i+1}-thumb.webp`,gallery:Array.from({length:5},(_,j)=>`diseno/tecno-pova/0${j+1}-full.webp`),galleryStart:i})),
 {role:'director',title:'Dirección — Proyecto 17',desc:'Prueba de navegación y visualización de proyectos.',thumb:'',loop:'',embed:'https://www.youtube.com/embed/WL-I5wWmVFw?controls=1&rel=0&autoplay=1',preview:'https://www.youtube.com/embed/WL-I5wWmVFw?enablejsapi=1&autoplay=0&mute=1&controls=0&loop=1&playlist=WL-I5wWmVFw&playsinline=1&rel=0&modestbranding=1',video:''},
 {role:'director',title:'Dirección — Proyecto 18',desc:'Prueba de navegación y visualización de proyectos.',thumb:'',loop:'',embed:'https://www.youtube.com/embed/YmyJT1k5XyQ?controls=1&rel=0&autoplay=1',preview:'https://www.youtube.com/embed/YmyJT1k5XyQ?enablejsapi=1&autoplay=0&mute=1&controls=0&loop=1&playlist=YmyJT1k5XyQ&playsinline=1&rel=0&modestbranding=1',video:''},
 {role:'director',title:'Dirección — Proyecto 19',desc:'Prueba de navegación y visualización de proyectos.',thumb:'',loop:'',embed:'https://www.youtube.com/embed/WL-I5wWmVFw?controls=1&rel=0&autoplay=1',preview:'https://www.youtube.com/embed/WL-I5wWmVFw?enablejsapi=1&autoplay=0&mute=1&controls=0&loop=1&playlist=WL-I5wWmVFw&playsinline=1&rel=0&modestbranding=1',video:''},
@@ -278,16 +337,43 @@ function renderWork(){
  $('#wt').textContent=names[filter];$$('#sw button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.f===filter));
  const n=colCount();lastCols=n;const grid=$('#grid');grid.replaceChildren();
  const cols=Array.from({length:n},()=>{const c=document.createElement('div');c.className='col';grid.append(c);return c}),hs=Array(n).fill(0);
- PROJECTS.filter(p=>filter==='all'||p.role===filter).forEach(p=>{
+ // En «Todo» se alternan vídeos y piezas gráficas con un orden editorial fijo.
+ const shown=PROJECTS.filter(p=>filter==='all'||p.role===filter);
+ let ordered=shown;
+ if(filter==='all'){
+  const motion=shown.filter(p=>p.role==='motion');
+  const graphic=shown.filter(p=>p.role==='grafico');
+  const other=[]; // Los proyectos de dirección de demostración no aparecen en Todo
+  // Intercalado reproducible para que el mosaico no salte de posición en cada visita.
+  const mi=[3,0,6,2,7,1,5,4].map(i=>motion[i]).filter(Boolean);
+  const gi=[5,2,0,4,1,3].map(i=>graphic[i]).filter(Boolean);
+  ordered=[];while(mi.length||gi.length){if(mi.length)ordered.push(mi.shift());if(gi.length)ordered.push(gi.shift());}
+  ordered.push(...other);
+ }
+ ordered.forEach(p=>{
   const [a,b]=String(p.ratio).split('/').map(Number);const k=hs.indexOf(Math.min(...hs));hs[k]+=(b||1)/(a||1);
   const el=document.createElement('div');el.className='project';el.setAttribute('role','button');el.tabIndex=0;el.setAttribute('aria-label','Ver proyecto: '+p.title);
   el.innerHTML=`<div class="preview${p.yt?' has-youtube':''}" style="aspect-ratio:${esc(p.ratio)}">${p.thumb?`<img class="th" src="${esc(p.thumb)}" alt="" loading="lazy" decoding="async">`:''}${p.loop?`<video src="${esc(p.loop)}" muted loop playsinline preload="none"></video>`:''}</div><h3>${esc(p.title)}</h3>`;
   const img=el.querySelector('img.th');
   if(img)img.onerror=()=>{if(img.dataset.f==='1'||!p.yt){img.remove();el.querySelector('.preview').classList.add('noimg');return}img.dataset.f='1';img.src=`https://i.ytimg.com/vi/${p.yt}/hqdefault.jpg`};
   const v=el.querySelector('video');let t;
+  if(v){
+   v.setAttribute('muted','');v.muted=true;v.setAttribute('playsinline','');
+   v.setAttribute('aria-label','Vista previa silenciosa de '+p.title);
+   if(!reduce){
+    // Histeresis: iniciar al 20%, pausar solo cuando casi desaparece (menos del 3%).
+    // Evita parpadeos de reproducción al desplazarse entre filas.
+    let isPlayingInView=false;
+    const observer=new IntersectionObserver(entries=>{for(const entry of entries){
+     const fraction=entry.intersectionRatio;
+     if(!isPlayingInView && fraction>=0.20){isPlayingInView=true;v.play().catch(()=>{});}
+     else if(isPlayingInView && fraction<=0.03){isPlayingInView=false;v.pause();}
+    }},{threshold:[0,0.03,0.20,0.45,1]});observer.observe(v);
+   }
+  }
   if(canHover){
    el.onmouseenter=()=>{if(v)v.play();else if(p.preview)t=setTimeout(()=>{const f=document.createElement('iframe');f.className='yt-preview';f.style.opacity=0;f.onload=()=>{f.style.opacity=1};f.src=p.preview;f.title='Vista previa de '+p.title;f.allow='autoplay; encrypted-media';el.querySelector('.preview').append(f)},280)};
-   el.onmouseleave=()=>{clearTimeout(t);if(v){v.pause();v.currentTime=0}el.querySelectorAll('iframe.yt-preview').forEach(f=>f.remove())};
+   el.onmouseleave=()=>{clearTimeout(t);if(v && reduce){v.pause()}el.querySelectorAll('iframe.yt-preview').forEach(f=>f.remove())};
   }
   el.onclick=()=>openProject(p);el.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openProject(p)}};
   cols[k].append(el)});
@@ -307,20 +393,52 @@ async function setRole(k,first){
 }
 $$('#sw button').forEach(b=>b.onclick=()=>{filter=b.dataset.f;renderWork()});
 const dlg=$('#dlg');
-function openProject(p){$('#dt').textContent=p.title;$('#dd').textContent=p.desc;const m=$('#media');m.replaceChildren();
+let galleryIndex=0,activeGallery=null;
+function showGalleryImage(i){
+ if(!activeGallery)return;
+ galleryIndex=(i+activeGallery.length)%activeGallery.length;
+ const im=$('#media .gallery-image');if(!im)return;
+ im.src=activeGallery[galleryIndex];im.alt=`Imagen ${galleryIndex+1} de ${activeGallery.length}`;
+ $('#media .gallery-counter').textContent=`${galleryIndex+1} / ${activeGallery.length}`;
+ const next=activeGallery[(galleryIndex+1)%activeGallery.length];const preload=new Image();preload.src=next;
+}
+function openProject(p){
+ if(p.editorial){
+  activeGallery=null;
+  const m=$('#media');m.replaceChildren();m.className='media editorial-mode';
+  $('#dt').textContent=p.title;$('#dd').textContent=p.desc;
+  const sections=Array.isArray(p.editorial)?p.editorial:[p.editorial];
+  sections.forEach((src,i)=>{const art=document.createElement('img');art.src=src;art.alt=p.title+' — sección '+(i+1)+' de '+sections.length;art.className='editorial-art';art.decoding='async';art.loading=i===0?'eager':'lazy';if(i===0)art.fetchPriority='high';m.append(art)});
+  dlg.classList.add('editorial-dialog');dlg.showModal();m.scrollTop=0;return;
+ }
+ dlg.classList.remove('editorial-dialog');
+ if(p.gallery){
+  activeGallery=p.gallery;galleryIndex=p.galleryStart||0;$('#dt').textContent=p.title;$('#dd').textContent=p.desc;
+  const m=$('#media');m.replaceChildren();m.classList.add('gallery-mode');
+  const im=document.createElement('img');im.className='gallery-image';im.alt='Imagen del proyecto';
+  const prev=document.createElement('button');prev.className='gallery-arrow gallery-prev';prev.type='button';prev.setAttribute('aria-label','Imagen anterior');prev.textContent='‹';prev.onclick=e=>{e.stopPropagation();showGalleryImage(galleryIndex-1)};
+  const next=document.createElement('button');next.className='gallery-arrow gallery-next';next.type='button';next.setAttribute('aria-label','Imagen siguiente');next.textContent='›';next.onclick=e=>{e.stopPropagation();showGalleryImage(galleryIndex+1)};
+  const count=document.createElement('div');count.className='gallery-counter';count.setAttribute('aria-live','polite');
+  m.append(im,prev,next,count);showGalleryImage(galleryIndex);
+  let touchX=0;m.ontouchstart=e=>{touchX=e.changedTouches[0].clientX};m.ontouchend=e=>{const dx=e.changedTouches[0].clientX-touchX;if(Math.abs(dx)>45)showGalleryImage(galleryIndex+(dx<0?1:-1))};
+  dlg.showModal();return;
+ }
+ activeGallery=null;$('#media').classList.remove('gallery-mode');$('#media').ontouchstart=null;$('#media').ontouchend=null;
+ $('#dt').textContent=p.title;$('#dd').textContent=p.desc;const m=$('#media');m.replaceChildren();m.style.setProperty('--video-ratio',(p.ratio||'16/9').replace('/',' / '));
  if(p.embed){const f=document.createElement('iframe');f.src=p.embed;f.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen';f.allowFullscreen=true;f.title=p.title;m.append(f)}
- else if(p.video){const v=document.createElement('video');v.src=p.video;v.controls=true;v.playsInline=true;m.append(v)}
+ else if(p.video){const v=document.createElement('video');v.src=p.video;v.controls=true;v.playsInline=true;v.autoplay=true;m.append(v)}
  else m.textContent='Aquí irá el video de este proyecto.';dlg.showModal()}
-dlg.addEventListener('close',()=>$('#media').replaceChildren());$('.x').onclick=()=>dlg.close();
-dlg.addEventListener('click',e=>{const r=dlg.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dlg.close()});
-function openReel(){const m=$('#reel-media');m.replaceChildren();const u=CONFIG.demoreel,f=document.createElement('iframe');f.src=u+(u.includes('?')?'&':'?')+'autoplay=1';f.title='Demoreel 2026 de Manuel Yucra';f.allow='autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share';f.referrerPolicy='strict-origin-when-cross-origin';f.allowFullscreen=true;m.append(f);$('#reel-dlg').showModal()}
+dlg.addEventListener('close',()=>{dlg.classList.remove('editorial-dialog');activeGallery=null;$('#media').replaceChildren();$('#media').classList.remove('gallery-mode')});
+addEventListener('keydown',e=>{if(dlg.open&&activeGallery){if(e.key==='ArrowRight')showGalleryImage(galleryIndex+1);if(e.key==='ArrowLeft')showGalleryImage(galleryIndex-1)}});$('#dlg .x').addEventListener('click',e=>{e.preventDefault();e.stopPropagation();dlg.close()});
+dlg.addEventListener('click',e=>{if(e.target===dlg||e.target.classList.contains('mh'))dlg.close()});
+function openReel(){const m=$('#reel-media');m.replaceChildren();const u=CONFIG.demoreel,f=document.createElement('iframe');f.src=u+(u.includes('?')?'&':'?')+'autoplay=1';f.title='Demoreel 2026 de Manuel Yucra';f.allow='autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share';f.referrerPolicy='strict-origin-when-cross-origin';f.allowFullscreen=true;m.append(f);m.style.setProperty('--video-ratio','16 / 9');$('#reel-dlg').showModal()}
 const toast=$('.toast');let tm;const notify=m=>{toast.textContent=m;toast.classList.add('show');clearTimeout(tm);tm=setTimeout(()=>toast.classList.remove('show'),3500)};
 $$('[data-link]').forEach(a=>a.addEventListener('click',e=>{const k=a.dataset.link,c=CONFIG;
  if(k==='demoreel'){e.preventDefault();return openReel()}
  const url={email:c.email&&'mailto:'+c.email,whatsapp:c.whatsapp&&'https://wa.me/'+c.whatsapp.replace(/\D/g,'')+'?text='+encodeURIComponent('Hola Manuel, vi tu portafolio y me gustaría hablar de un proyecto.'),linkedin:c.linkedin,vimeo:c.vimeo,instagram:c.instagram,cv:c.cv}[k];
  if(!url){e.preventDefault();return notify('Este enlace aún no está configurado.')}a.href=url;if(k==='cv'){a.download='Manuel-Yucra-CV-2026.pdf'}else if(k!=='email'){a.target='_blank';a.rel='noopener noreferrer'}}));
-const reelDlg=$('#reel-dlg');reelDlg.addEventListener('close',()=>$('#reel-media').replaceChildren());$('.reel-x').onclick=()=>reelDlg.close();
-reelDlg.addEventListener('click',e=>{const r=reelDlg.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)reelDlg.close()});
+const reelDlg=$('#reel-dlg');reelDlg.addEventListener('close',()=>$('#reel-media').replaceChildren());$('.reel-x').addEventListener('click',e=>{e.preventDefault();e.stopPropagation();reelDlg.close()});
+reelDlg.addEventListener('click',e=>{if(e.target===reelDlg||e.target.classList.contains('mh'))reelDlg.close()});
 $('#copy-mail').onclick=async()=>{if(!CONFIG.email)return notify('Agrega tu correo en CONFIG.');try{await navigator.clipboard.writeText(CONFIG.email);notify('Correo copiado.')}catch{notify(CONFIG.email)}};
 $('#year').textContent=new Date().getFullYear();
 const SHORT={motion:'Desde 2020 dando movimiento a marcas.',grafico:'Casi 8 años de experiencia.',director:'He dirigido animación 2D.',batman:'Nunca nos han visto juntos.',jedi:'Su solicitud al Consejo sigue pendiente.'};
